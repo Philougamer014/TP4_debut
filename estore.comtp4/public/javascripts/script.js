@@ -36,3 +36,22 @@
 //        <p class="price">$36.00</p>
 //    </td>
 //</tr>
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionner tous les boutons ayant un attribut 'data-article-id'
+    var buttons = document.querySelectorAll('a[data-article-id]');
+
+    // Ajouter un écouteur d'événements à chaque bouton
+    buttons.forEach(function(button) {
+        button.addEventListener('click', function(event) {
+            // Empêcher l'action par défaut
+            event.preventDefault();
+
+            // Récupérer la valeur de l'attribut 'data-article-id'
+            var articleId = this.getAttribute('data-article-id');
+
+            // Afficher l'ID de l'article dans la console ou effectuer d'autres actions
+            console.log('Article ID:', articleId);
+        });
+    });
+});
