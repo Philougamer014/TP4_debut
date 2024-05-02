@@ -37,21 +37,18 @@
 //    </td>
 //</tr>
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionner tous les boutons ayant un attribut 'data-article-id'
-    var buttons = document.querySelectorAll('a[data-article-id]');
-
-    // Ajouter un écouteur d'événements à chaque bouton
-    buttons.forEach(function(button) {
-        button.addEventListener('click', function(event) {
-            // Empêcher l'action par défaut
-            event.preventDefault();
-
-            // Récupérer la valeur de l'attribut 'data-article-id'
-            var articleId = this.getAttribute('data-article-id');
-
-            // Afficher l'ID de l'article dans la console ou effectuer d'autres actions
-            console.log('Article ID:', articleId);
-        });
+document.querySelectorAll('.info-button').forEach(button => {
+    button.addEventListener('click', function() {
+        // Récupérer les attributs de données
+        var articleId = this.getAttribute('data-article-id');
+        var prix = this.getAttribute('data-prix');
+        var name = this.getAttribute('data-name');
+        
+        // Afficher les informations dans la console
+        console.log('Article ID:', articleId);
+        console.log('Prix:', prix);
+        console.log('Nom:', name);
     });
 });
+
+
