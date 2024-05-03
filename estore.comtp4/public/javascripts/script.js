@@ -69,21 +69,32 @@ $(document).ready(function() {
 function updateTotalPriceAndQuantity() {
     var totalPrice = 0;
     var totalQuantity = 0;
+    var tpsRate = 0.05;  // Taux de TPS
+    var tvqRate = 0.09975;  // Taux de TVQ
+
     $('.tbody-cart tr').each(function() {
         var price = parseFloat($(this).find('.price').text().substring(1));
         var quantity = parseInt($(this).find('input[type="text"]').val());
-        totalPrice += price;
+        totalPrice += price * quantity;  // Calcule le total basé sur la quantité
         totalQuantity += quantity;
     });
 
-    updateSubtotalPrice(totalPrice);
+    var tps = totalPrice * tpsRate;  // Calcule la TPS
+    var tvq = totalPrice * tvqRate;  // Calcule la TVQ
+    var totalWithTaxes = totalPrice + tps + tvq;  // Total incluant les taxes
+
+    updatePriceDetails(totalPrice, tps, tvq, totalWithTaxes);
     updateIconText(totalQuantity);
 }
 
-function updateSubtotalPrice(newPrice) {
-    $('.checkout-sub-total .price').text(`$${newPrice.toFixed(2)}`);
+function updatePriceDetails(totalPrice, tps, tvq, totalWithTaxes) {
+    $('.checkout-sub-total .price').text(`$${totalPrice.toFixed(2)}`);
+    $('.checkout-sub-total .TPS').text(`$${tps.toFixed(2)}`);
+    $('.checkout-sub-total .TVQ').text(`$${tvq.toFixed(2)}`);
+    $('.checkout-sub-total .total-price').text(`$${totalWithTaxes.toFixed(2)}`);
 }
 
 function updateIconText(newValue) {
     $('.icon-text.text-style-1').text(newValue);
 }
+
