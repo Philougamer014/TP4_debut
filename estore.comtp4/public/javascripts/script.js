@@ -46,7 +46,19 @@ $(document).ready(function() {
         updateTotalPriceAndQuantity();
     });
 
-    // Gestion des boutons '+' et '-'
+    // Gestion des clics sur les boutons supprimer
+    $('.tbody-cart').on('click', '.delete', function() {
+        var $row = $(this).closest('tr');
+        var price = parseFloat($row.find('.price').text().substring(1)); // Prix de l'article supprimé
+        var quantity = parseInt($row.find('input[type="text"]').val()); // Quantité de l'article supprimé
+        var totalPriceRemoved = price * quantity; // Prix total de l'article supprimé
+    
+        $row.remove(); // Supprimer la ligne du panier
+        updateTotalPriceAndQuantity(totalPriceRemoved); // Mettre à jour le prix total en soustrayant le prix de l'article supprimé
+        return false; // Empêcher tout autre traitement de l'événement de propagation
+    });
+
+    // Gestion des clics sur les boutons '+' et '-'
     $('.tbody-cart').on('click', '.add, .sub', function() {
         var $input = $(this).siblings('input[type="text"]');
         var quantity = parseInt($input.val());
@@ -66,7 +78,7 @@ $(document).ready(function() {
     });
 });
 
-function updateTotalPriceAndQuantity() {
+function updateTotalPriceAndQuantity(totalPriceRemoved = 0) {
     var totalPrice = 0;
     var totalQuantity = 0;
     var tpsRate = 0.05;  // Taux de TPS
@@ -78,6 +90,8 @@ function updateTotalPriceAndQuantity() {
         totalPrice += price * quantity;  // Calcule le total basé sur la quantité
         totalQuantity += quantity;
     });
+
+    totalPrice -= totalPriceRemoved; // Soustraire le prix de l'article supprimé
 
     var tps = totalPrice * tpsRate;  // Calcule la TPS
     var tvq = totalPrice * tvqRate;  // Calcule la TVQ
@@ -97,4 +111,3 @@ function updatePriceDetails(totalPrice, tps, tvq, totalWithTaxes) {
 function updateIconText(newValue) {
     $('.icon-text.text-style-1').text(newValue);
 }
-
