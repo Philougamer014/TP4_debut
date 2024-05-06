@@ -45,7 +45,7 @@ $(document).ready(function() {
         }
         updateTotalPriceAndQuantity();
     });
-
+//
     // Gestion des clics sur les boutons supprimer
     $('.tbody-cart').on('click', '.delete', function() {
         var $row = $(this).closest('tr');
@@ -57,7 +57,7 @@ $(document).ready(function() {
         updateTotalPriceAndQuantity(totalPriceRemoved); // Mettre à jour le prix total en soustrayant le prix de l'article supprimé
         return false; // Empêcher tout autre traitement de l'événement de propagation
     });
-
+//
     // Gestion des clics sur les boutons '+' et '-'
     $('.tbody-cart').on('click', '.add, .sub', function() {
         var $input = $(this).siblings('input[type="text"]');
